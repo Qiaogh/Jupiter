@@ -32,7 +32,7 @@ export default class LoginRoute extends React.Component<LoginProps, any> {
             headers: {
                 "content-type": "application/json"
             }
-        }).then(res => {
+        }).then((res: any) => {
             console.log("login res", res);
             if (res.data != null && res.status === 200) {
                 store.user.login(this.state.username, res.data.token);

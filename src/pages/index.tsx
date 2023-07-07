@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Link, matchPath, Redirect, RouteComponentProps, Switch} from 'react-router-dom';
-import {AsideNav, Button, Layout, toast} from 'amis';
+import {AsideNav, Button, Layout, Select, toast} from 'amis';
 import {IMainStore} from '@/stores';
 import {inject, observer} from 'mobx-react';
 import request from '@/utils/requestInterceptor';
@@ -33,8 +33,16 @@ export interface AdminProps extends RouteComponentProps<any> {
 @inject("store")
 @observer
 export default class Admin extends React.Component<AdminProps, any> {
+
     renderHeader() {
         const store = this.props.store;
+
+        const onChange = (value: any) => {
+            let menus: any = this.state.menus;
+            this.setState({
+                navigations: [menus[value.value]] || []
+            });
+        };
 
         return (
             <div>
@@ -64,6 +72,16 @@ export default class Admin extends React.Component<AdminProps, any> {
                         </Button>
                     </div>
 
+                    <div className="nav navbar-nav hidden-xs pull-left">
+                        <Select
+                            showSearch
+                            placeholder="select application"
+                            optionFilterProp="children"
+                            onChange={onChange}
+                            options={this.state.applications}
+                        />
+                    </div>
+
                     <div className="m-l-auto hidden-xs pull-right">
                         <span>{store.user.name}</span><span className={'btn btn-link'} onClick={this.logout}>[退出]</span>
                     </div>
@@ -75,6 +93,8 @@ export default class Admin extends React.Component<AdminProps, any> {
     }
 
     state = {
+        menus: Object,
+        applications: [],
         pathname: '',
         hasLoadMenu: false,
         navigations: []
@@ -110,12 +130,20 @@ export default class Admin extends React.Component<AdminProps, any> {
                 method: "get",
                 url: '/user/api/currentUser/getMenuTree'
             }).then((res: any) => {
-                let menus: any[] = Object.keys(res.data).map(key => {
-                    return res.data[key];
-                });
+
+                let menus = res.data;
+                let applications: string[] = Object.keys(res.data);
+                let navigations = [menus[applications[0]]] || [];
+
+                const options = applications.map(value => {
+                    return {value: value, label: value};
+                })
+
                 this.setState({
-                        "navigations": menus,
-                        "hasLoadMenu": true
+                        menus: menus,
+                        navigations: navigations,
+                        applications: options,
+                        hasLoadMenu: true
                     }
                 )
             })
