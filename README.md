@@ -10,3 +10,23 @@ eg: 增加一个user应用，则创建一个user的目录
 
 
 > amis: https://baidu.github.io/amis/zh-CN/docs/index
+
+### 环境需求
+#### node : V18+
+
+
+### 服务启动
+1. npm install 
+2. npm start
+
+
+### 注意事项
+在执行npm start启动的时候,可能会出现
+```azure
+Module not found: Error: Can't resolve 'react-overlays/useRootClose' in xxx
+```
+则需要执行:
+```azure
+npm install react-overlays
+```
+
