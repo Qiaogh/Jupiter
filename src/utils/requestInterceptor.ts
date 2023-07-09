@@ -11,6 +11,7 @@ export default function request(config: AxiosRequestConfig) {
     config.url = "/gw" + config.url;
     config.headers = config.headers || {};
     config.headers["Authorization"] = <string>localStorage.getItem("Authorization")
+    config.headers["X-TenantID"] = "test0"
 
     return new Promise((resolve, reject) => {
         let onSuccess = (res: any) => {
