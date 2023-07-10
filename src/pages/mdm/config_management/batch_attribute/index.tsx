@@ -37,7 +37,7 @@ const form = [
     },
     {
         "type": "input-table",
-        "name": "table",
+        "name": "batchAttributeFieldConfigs",
         "addable": true,
         "copyable": true,
         "editable": true,
@@ -106,7 +106,7 @@ const add = {
         "size": "lg",
         "body": {
             "type": "form",
-            "api": "post:/mdm/barcodeParseRule/createOrUpdate",
+            "api": "post:/mdm/batchAttributeConfig/createOrUpdate",
             "body": form
         }
     }
@@ -149,8 +149,8 @@ const columns = [
         label: "货主",
     },
     {
-        name: "executeTime",
-        label: "埋点",
+        name: "skuFirstCategory",
+        label: "商品大类",
     },
     {
         name: "createUser",
@@ -166,7 +166,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "BarcodeParseRule";
+const searchIdentity = "BatchAttributeConfig";
 const showColumns = columns;
 
 const filter = {
@@ -227,7 +227,7 @@ const searchFilter =
 
 const schema = {
     type: 'page',
-    title: '条码解析管理',
+    title: '批次管理',
     toolbar: [],
     initApi: "/mdm/dictionary/getAll",
     body: [
@@ -255,13 +255,14 @@ const schema = {
                         {
                             "label": "修改",
                             "type": "button",
-                            "actionType": "drawer",
-                            "drawer": {
+                            "actionType": "dialog",
+                            "dialog": {
                                 "title": "修改",
+                                "size": "lg",
                                 "body": {
                                     "type": "form",
-                                    initApi: "get:/mdm/barcodeParseRule/${id}",
-                                    "api": "post:/mdm/barcodeParseRule/createOrUpdate",
+                                    initApi: "get:/mdm/batchAttributeConfig/${id}",
+                                    "api": "post:/mdm/batchAttributeConfig/createOrUpdate",
                                     "controls": form
                                 }
                             }
