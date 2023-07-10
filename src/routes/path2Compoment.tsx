@@ -10,6 +10,7 @@ import WarehouseMainData from '../pages/mdm/main_data/warehouse'
 import OwnerMainData from '../pages/mdm/main_data/owner'
 import SkuMainData from '../pages/mdm/main_data/sku'
 import BatchAttribute from '../pages/mdm/config_management/batch_attribute'
+import BarcodeParseRule from '../pages/mdm/config_management/barcode_parse_rule'
 
 
 const path2components = [
@@ -59,7 +60,10 @@ const path2components = [
         path: '/mdm/config-center/batch-attribute',
         component: BatchAttribute
     },
-
+    {
+        path: '/mdm/config-center/barcode-parse-rule',
+        component: BarcodeParseRule
+    },
 
 ]
 
