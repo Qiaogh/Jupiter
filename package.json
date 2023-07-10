@@ -47,6 +47,12 @@
     "react-router-dom": "5.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.8",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.22.7",
+    "@babel/preset-env": "^7.22.7",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@types/lodash": "^4.14.123",
     "@types/node": "^11.13.8",
@@ -55,6 +61,7 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.2",
     "axios-mock-adapter": "1.16.0",
+    "babel-loader": "^9.1.2",
     "bce-sdk-js": "^0.2.9",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.4.2",

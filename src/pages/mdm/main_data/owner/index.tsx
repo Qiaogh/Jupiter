@@ -1,4 +1,5 @@
 import schema2component from "../../../../utils/schema2component";
+import {address, contactor} from "@/pages/mdm/main_data/constants/form_constants";
 
 const form = [
     {
@@ -10,29 +11,24 @@ const form = [
         "name": "version"
     },
     {
-        "label": "仓库编码",
+        "label": "货主编码",
         "type": "input-text",
-        "name": "warehouseCode"
+        "name": "ownerCode"
     },
     {
-        "label": "仓库名称",
+        "label": "货主名称",
         "type": "input-text",
-        "name": "warehouseName"
+        "name": "ownerName"
     },
     {
-        "label": "仓库类型",
+        "label": "货主类型",
         "type": "select",
-        "name": "warehouseType",
-        "options": "${WarehouseType}",
+        "name": "ownerType",
+        "source": "${OwnerType}"
     },
-    {
-        "label": "状态",
-        "type": "switch",
-        "name": "status",
-        "value": 1,
-        "trueValue": 1,
-        "falseValue": 0
-    }
+    ...address,
+    ...contactor
+
 ]
 
 const add = {
@@ -46,7 +42,7 @@ const add = {
         "title": "新增",
         "body": {
             "type": "form",
-            "api": "post:/user/api/role/add",
+            "api": "post:/mdm/ownerMainData/createOrUpdate",
             "body": form
         }
     }
@@ -65,6 +61,62 @@ const actions = [
     }
 ]
 
+const columns = [
+    {
+        name: "id",
+        label: "ID",
+        hidden: true
+    },
+    {
+        name: "version",
+        label: "Version",
+        hidden: true
+    },
+    {
+        name: "ownerCode",
+        label: "货主编码",
+    },
+    {
+        name: "ownerName",
+        label: "货主名称",
+    },
+    {
+        name: "ownerType",
+        label: "货主类型",
+    },
+    {
+        name: "country",
+        label: "国家",
+    },
+    {
+        name: "province",
+        label: "省",
+    },
+    {
+        name: "city",
+        label: "市",
+    },
+    {
+        name: "district",
+        label: "区/县",
+    },
+    {
+        name: "name",
+        label: "联系人",
+    },
+    {
+        name: "createTime",
+        label: "创建时间",
+    },
+    {
+        name: "updateTime",
+        label: "更新时间",
+    }
+]
+
+const searchIdentity = "OwnerMainData";
+const showColumns = columns;
+
 const filter = {
     "title": "条件搜索",
     "body": [
@@ -72,11 +124,43 @@ const filter = {
             "type": "group",
             "body": [
                 {
-                    "label": "角色名称",
+                    "label": "货主编码",
                     "type": "input-text",
-                    "name": "name",
+                    "name": "ownerCode",
                     "clearable": true,
-                    "size": "sm"
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "label": "货主名称",
+                    "type": "input-text",
+                    "name": "ownerName",
+                    "clearable": true,
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "label": "仓库类型",
+                    "type": "input-text",
+                    "name": "ownerType",
+                    "clearable": true,
+                    "source": "${OwnerType}",
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "label": "创建人",
+                    "type": "input-text",
+                    "name": "createUser",
+                    "clearable": true,
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "type": "input-date-range",
+                    "name": "createTime",
+                    "label": "创建时间",
+                    "op": "bt"
                 }
             ]
         }
@@ -84,17 +168,10 @@ const filter = {
     actions: actions
 }
 
-const menuTree = [
-    {
-        "type": "input-tree",
-        "name": "menus",
-        "label": "菜单权限",
-        "multiple": true,
-        "initiallyOpen": false,
-        "withChildren": true,
-        "pathSeparator": "/",
-        "source": "get:/user/api/role/getRoleMenu/${id}"
-    }];
+const searchFilter =
+    filter.body[0].body.map(value => {
+        return value.name + "-op=" + value.op;
+    }).join("&");
 
 const schema = {
     type: 'page',
@@ -107,28 +184,17 @@ const schema = {
             name: "role",
             api: {
                 method: "POST",
-                url: "/user/api/role/search?page=${page}&perPage=${perPage}",
+                url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
                 dataType: "application/json"
+            },
+            defaultParams: {
+                "searchIdentity": searchIdentity,
+                "showColumns": showColumns
             },
             filter: filter,
             footerToolbar: ["switch-per-page", "statistics", "pagination"],
             columns: [
-                {
-                    name: "id",
-                    label: "ID",
-                },
-                {
-                    name: "name",
-                    label: "角色名称",
-                },
-                {
-                    name: "code",
-                    label: "角色编码",
-                },
-                {
-                    name: 'status',
-                    label: '状态'
-                },
+                ...columns,
                 {
                     type: "operation",
                     label: "操作",
@@ -142,33 +208,11 @@ const schema = {
                                 "title": "修改",
                                 "body": {
                                     "type": "form",
-                                    // "initApi": "get:/user/api/user/${id}",
-                                    "api": "post:/user/api/role/update",
+                                    "api": "post:/mdm/ownerMainData/createOrUpdate",
                                     "body": form
                                 }
                             }
-                        },
-                        {
-                            "label": "删除",
-                            "type": "button",
-                            "actionType": "ajax",
-                            "level": "danger",
-                            "confirmText": "确认要删除？",
-                            "api": "delete:/user/api/role/${id}"
-                        },
-                        {
-                            "label": "分配权限",
-                            "type": "button",
-                            "actionType": "drawer",
-                            "drawer": {
-                                "title": "分配权限",
-                                "body": {
-                                    "type": "form",
-                                    "api": "post:/user/api/role/updateRoleMenu/${id}",
-                                    "body": menuTree
-                                }
-                            }
-                        },
+                        }
                     ],
                     toggled: true
                 }
