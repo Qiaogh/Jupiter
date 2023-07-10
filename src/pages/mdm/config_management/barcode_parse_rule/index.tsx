@@ -13,97 +13,72 @@ const form = [
     {
         "label": "规则编码",
         "type": "input-text",
-        "name": "code",
-        "required": true
+        "name": "code"
     },
     {
         "label": "规则名称",
         "type": "input-text",
-        "name": "name",
-        "required": true
+        "name": "name"
     },
     {
+        "label": "货主编码",
         "type": "select",
-        "name": "ownerCode",
-        "label": "货主",
-        "source": owner_search_api
-
+        "name": "ownerCode"
     },
     {
-        "label": "商品大类",
+        "label": "埋点",
         "type": "select",
-        "name": "skuFirstCategory",
-        "options": "${SkuFirstCategory}",
+        "name": "executeTime",
+        "options": "${ExecuteTime}",
     },
     {
-        "type": "input-table",
-        "name": "table",
-        "addable": true,
-        "copyable": true,
-        "editable": true,
-        "value": [
-            {
-                "fieldCode": "inboundDate",
-                "fieldName": "入库日期"
-            },
-            {
-                "fieldCode": "productDate",
-                "fieldName": "生产日期"
-            },
-            {
-                "fieldCode": "expiredDate",
-                "fieldName": "到期日期"
-            }
-        ],
-        "columns": [
-            {
-                "name": "fieldCode",
-                "label": "批次属性编码",
-                "type": "input-text"
-            },
-            {
-                "name": "fieldName",
-                "label": "批次属性",
-                "type": "input-text"
-
-            },
-            {
-                "name": "required",
-                "label": "是否必填",
-                "type": "select",
-                "source": "${TrueFalse}"
-            },
-            {
-                "name": "keyAttribute",
-                "label": "关键属性",
-                "type": "select",
-                "source": "${TrueFalse}"
-            },
-            // {
-            //     "name": "format",
-            //     "label": "给是",
-            //     "type": "select",
-            // },
-            {
-                "name": "enable",
-                "label": "启用",
-                "type": "select",
-                "source": "${TrueFalse}"
-            }
-        ]
+        "label": "业务模块",
+        "type": "select",
+        "name": "businessFlow",
+        "options": "${BusinessFlow}",
+    },
+    {
+        "label": "品牌",
+        "type": "select",
+        "name": "brand"
+    },
+    {
+        "label": "拼接位置",
+        "type": "select",
+        "name": "unionLocation",
+        "options": "${UnionLocation}",
+    },
+    {
+        "type": "input-text",
+        "name": "union",
+        "placeholder": "请输入拼接内容"
+    },
+    {
+        "label": "解析规则",
+        "type": "textarea",
+        "name": "regularExpression"
+    },
+    {
+        "name": "resultFields",
+        "label": "解析对象",
+        "type": "input-array",
+        "inline": true,
+        "items": {
+            "type": "select",
+            "clearable": false
+        }
     }
 ]
 
 const add = {
     "type": "button",
-    "actionType": "dialog",
+    "actionType": "drawer",
     "icon": "fa fa-plus",
     "label": "新增",
     "target": "role",
     "closeOnOutside": true,
-    "dialog": {
+    "drawer": {
         "title": "新增",
-        "size": "lg",
         "body": {
             "type": "form",
             "api": "post:/mdm/barcodeParseRule/createOrUpdate",
@@ -260,7 +235,7 @@ const schema = {
                                 "title": "修改",
                                 "body": {
                                     "type": "form",
-                                    initApi: "get:/mdm/barcodeParseRule/${id}",
+                                    initApi: "get:/mdm/barcodeParseRule/skuMainData/${id}",
                                     "api": "post:/mdm/barcodeParseRule/createOrUpdate",
                                     "controls": form
                                 }
