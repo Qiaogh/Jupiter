@@ -14,6 +14,11 @@ import BarcodeParseRule from '../pages/mdm/config_management/barcode_parse_rule'
 import ParameterConfig from '../pages/mdm/config_management/param_config'
 
 
+import WarehouseManage from '../pages/wms/basic/warehouse/warehouse_management'
+import WarehouseAreaGroupManage from '../pages/wms/basic/warehouse/warehouse_area_group'
+import WarehouseAreaManage from '../pages/wms/basic/warehouse/warehouse_area'
+import WarehouseLogicManage from '../pages/wms/basic/warehouse/warehouse_logic'
+
 const path2components = [
     {
         path: '/',
@@ -69,6 +74,25 @@ const path2components = [
         path: '/mdm/config-center/parameter-config',
         component: ParameterConfig
     },
+
+    //WMS System
+    {
+        path: '/wms/basic-info/warehouse-manage',
+        component: WarehouseManage
+    },
+    {
+        path: '/wms/basic-info/warehouse-area-group-manage',
+        component: WarehouseAreaGroupManage
+    },
+    {
+        path: '/wms/basic-info/warehouse-area-manage',
+        component: WarehouseAreaManage
+    },
+    {
+        path: '/wms/basic-info/logical-area-manage',
+        component: WarehouseLogicManage
+    }
+
 ]
 
 export default path2components;
