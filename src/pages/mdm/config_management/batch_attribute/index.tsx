@@ -1,5 +1,6 @@
 import schema2component from "../../../../utils/schema2component";
 import {owner_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
+import {true_false_options} from "@/utils/commonContants";
 
 const form = [
     {
@@ -41,6 +42,7 @@ const form = [
         "addable": true,
         "copyable": true,
         "editable": true,
+        "showFooterAddBtn": false,
         "value": [
             {
                 "fieldCode": "inboundDate",
@@ -71,13 +73,13 @@ const form = [
                 "name": "required",
                 "label": "是否必填",
                 "type": "select",
-                "source": "${TrueFalse}"
+                "options": true_false_options
             },
             {
                 "name": "keyAttribute",
                 "label": "关键属性",
                 "type": "select",
-                "source": "${TrueFalse}"
+                "options": true_false_options
             },
             // {
             //     "name": "format",
@@ -88,7 +90,7 @@ const form = [
                 "name": "enable",
                 "label": "启用",
                 "type": "select",
-                "source": "${TrueFalse}"
+                "options": true_false_options
             }
         ]
     }
@@ -99,7 +101,6 @@ const add = {
     "actionType": "dialog",
     "icon": "fa fa-plus",
     "label": "新增",
-    "target": "role",
     "closeOnOutside": true,
     "dialog": {
         "title": "新增",
@@ -212,6 +213,7 @@ const filter = {
                     "type": "input-date-range",
                     "name": "createTime",
                     "label": "创建时间",
+                    "clearable": true,
                     "op": "bt"
                 }
             ]
@@ -233,7 +235,7 @@ const schema = {
     body: [
         {
             type: "crud",
-            name: "role",
+            name: "batchAttributeTable",
             api: {
                 method: "POST",
                 url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
@@ -261,7 +263,10 @@ const schema = {
                                 "size": "lg",
                                 "body": {
                                     "type": "form",
-                                    initApi: "get:/mdm/batchAttributeConfig/${id}",
+                                    "initApi": {
+                                        "url": "/mdm/batchAttributeConfig/${id}",
+                                        "method": "get"
+                                    },
                                     "api": "post:/mdm/batchAttributeConfig/createOrUpdate",
                                     "controls": form
                                 }

@@ -23,19 +23,20 @@ const form = [
     {
         "label": "货主编码",
         "type": "select",
-        "name": "ownerCode"
+        "name": "ownerCode",
+        "source": owner_search_api
     },
     {
         "label": "埋点",
         "type": "select",
         "name": "executeTime",
-        "options": "${ExecuteTime}",
+        "source": "${ExecuteTime}",
     },
     {
         "label": "业务模块",
         "type": "select",
         "name": "businessFlow",
-        "options": "${BusinessFlow}",
+        "source": "${BusinessFlow}",
     },
     {
         "label": "品牌",
@@ -46,11 +47,11 @@ const form = [
         "label": "拼接位置",
         "type": "select",
         "name": "unionLocation",
-        "options": "${UnionLocation}",
+        "source": "${UnionLocation}",
     },
     {
         "type": "input-text",
-        "name": "union",
+        "name": "unionStr",
         "placeholder": "请输入拼接内容"
     },
     {
@@ -65,20 +66,22 @@ const form = [
         "inline": true,
         "items": {
             "type": "select",
-            "clearable": false
+            "clearable": false,
+            "source": "${ParserObject}"
         }
     }
 ]
 
 const add = {
     "type": "button",
-    "actionType": "drawer",
+    "actionType": "dialog",
     "icon": "fa fa-plus",
     "label": "新增",
-    "target": "role",
     "closeOnOutside": true,
-    "drawer": {
+    "dialog": {
+        "name": "addDialog",
         "title": "新增",
+        "size": "lg",
         "body": {
             "type": "form",
             "api": "post:/mdm/barcodeParseRule/createOrUpdate",
@@ -208,7 +211,7 @@ const schema = {
     body: [
         {
             type: "crud",
-            name: "role",
+            name: "barcodeParseRule",
             api: {
                 method: "POST",
                 url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
@@ -230,12 +233,13 @@ const schema = {
                         {
                             "label": "修改",
                             "type": "button",
-                            "actionType": "drawer",
-                            "drawer": {
+                            "actionType": "dialog",
+                            "dialog": {
                                 "title": "修改",
+                                "size": "lg",
                                 "body": {
                                     "type": "form",
-                                    initApi: "get:/mdm/barcodeParseRule/skuMainData/${id}",
+                                    initApi: "get:/mdm/barcodeParseRule/${id}",
                                     "api": "post:/mdm/barcodeParseRule/createOrUpdate",
                                     "controls": form
                                 }
