@@ -19,6 +19,9 @@ import WarehouseAreaGroupManage from '../pages/wms/basic/warehouse/warehouse_are
 import WarehouseAreaManage from '../pages/wms/basic/warehouse/warehouse_area'
 import WarehouseLogicManage from '../pages/wms/basic/warehouse/warehouse_logic'
 
+import WorkStationManage from '../pages/wms/basic/station/work_station'
+
+
 const path2components = [
     {
         path: '/',
@@ -75,6 +78,7 @@ const path2components = [
         component: ParameterConfig
     },
 
+
     //WMS System
     {
         path: '/wms/basic-info/warehouse-manage',
@@ -91,7 +95,12 @@ const path2components = [
     {
         path: '/wms/basic-info/logical-area-manage',
         component: WarehouseLogicManage
-    }
+    },
+
+    {
+        path: '/wms/basic-info/work-station-manage',
+        component: WorkStationManage
+    },
 
 ]
 
