@@ -1,5 +1,6 @@
 import schema2component from "../../../../utils/schema2component";
 import {owner_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
+import {true_false_options} from "@/utils/commonContants";
 
 const form = [
     {
@@ -11,42 +12,22 @@ const form = [
         "name": "version"
     },
     {
-        "label": "参数编码",
+        "label": "枚举编码",
         "type": "input-text",
-        "name": "code"
+        "name": "code",
+        "required": true
     },
     {
-        "label": "参数名称",
+        "label": "枚举名称",
         "type": "input-text",
-        "name": "name"
+        "name": "name",
+        "required": true
     },
     {
-        "label": "参数对象",
-        "type": "select",
-        "name": "configApplyObject",
-        "source": "${ConfigApplyObject}",
-    },
-    {
-        "label": "业务模块",
-        "type": "select",
-        "name": "configApplyModule",
-        "source": "${ConfigApplyModule}",
-    },
-    {
-        "label": "参数类型",
-        "type": "select",
-        "name": "configType",
-        "source": "${ConfigType}",
-    },
-    {
-        "label": "状态",
         "type": "switch",
-        "name": "enable"
-    },
-    {
-        "label": "默认值",
-        "type": "input-text",
-        "name": "defaultValue"
+        "name": "editable",
+        "label": "是否允许编辑",
+
     },
     {
         "label": "描述",
@@ -54,9 +35,39 @@ const form = [
         "name": "description"
     },
     {
-        "label": "备注",
-        "type": "input-text",
-        "name": "remark"
+        "type": "input-table",
+        "name": "items",
+        "addable": true,
+        "editable": true,
+        "columns": [
+            {
+                "name": "value",
+                "label": "编码",
+                "type": "input-text"
+            },
+            {
+                "name": "showContext",
+                "label": "显示内容",
+                "type": "input-text"
+
+            },
+            {
+                "name": "order",
+                "label": "显示顺序",
+                "type": "input-number"
+            },
+            {
+                "name": "defaultItem",
+                "label": "是否默认",
+                "type": "select",
+                "options": true_false_options
+            },
+            {
+                "name": "description",
+                "label": "描述",
+                "type": "input-text"
+            }
+        ]
     }
 ]
 
@@ -67,12 +78,11 @@ const add = {
     "label": "新增",
     "closeOnOutside": true,
     "dialog": {
-        "name": "addDialog",
         "title": "新增",
         "size": "lg",
         "body": {
             "type": "form",
-            "api": "post:/mdm/parameterConfig/createOrUpdate",
+            "api": "post:/mdm/dictionary/createOrUpdate",
             "body": form
         }
     }
@@ -104,23 +114,19 @@ const columns = [
     },
     {
         name: "code",
-        label: "参数编码",
+        label: "枚举编码",
     },
     {
         name: "name",
-        label: "参数名称",
+        label: "枚举名称",
     },
     {
-        name: "configApplyObject",
-        label: "参数对象",
+        name: "editable",
+        label: "是否默认",
     },
     {
-        name: "configApplyModule",
-        label: "业务模块",
-    },
-    {
-        name: "configType",
-        label: "参数类型",
+        name: "description",
+        label: "描述",
     },
     {
         name: "createUser",
@@ -136,7 +142,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "ParameterConfig";
+const searchIdentity = "Dictionary";
 const showColumns = columns;
 
 const filter = {
@@ -146,7 +152,7 @@ const filter = {
             "type": "group",
             "body": [
                 {
-                    "label": "编码",
+                    "label": "枚举编码",
                     "type": "input-text",
                     "name": "code",
                     "clearable": true,
@@ -154,19 +160,10 @@ const filter = {
                     "op": "eq"
                 },
                 {
-                    "label": "名称",
+                    "label": "枚举名称",
                     "type": "input-text",
                     "name": "name",
                     "clearable": true,
-                    "size": "sm",
-                    "op": "eq"
-                },
-                {
-                    "label": "参数对象",
-                    "type": "select",
-                    "name": "configApplyObject",
-                    "clearable": true,
-                    "source": "${ConfigApplyObject}",
                     "size": "sm",
                     "op": "eq"
                 },
@@ -182,6 +179,7 @@ const filter = {
                     "type": "input-date-range",
                     "name": "createTime",
                     "label": "创建时间",
+                    "clearable": true,
                     "op": "bt"
                 }
             ]
@@ -197,13 +195,13 @@ const searchFilter =
 
 const schema = {
     type: 'page',
-    title: '参数管理',
+    title: '字典管理',
     toolbar: [],
     initApi: "/mdm/dictionary/getAll",
     body: [
         {
             type: "crud",
-            name: "paramConfigTable",
+            name: "dictionaryTable",
             api: {
                 method: "POST",
                 url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
@@ -231,8 +229,8 @@ const schema = {
                                 "size": "lg",
                                 "body": {
                                     "type": "form",
-                                    initApi: "get:/mdm/parameterConfig/${id}",
-                                    "api": "post:/mdm/parameterConfig/createOrUpdate",
+                                    "initApi": "get:/mdm/dictionary/${id}",
+                                    "api": "post:/mdm/dictionary/createOrUpdate",
                                     "controls": form
                                 }
                             }

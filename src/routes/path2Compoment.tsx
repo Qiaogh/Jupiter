@@ -12,7 +12,7 @@ import SkuMainData from '../pages/mdm/main_data/sku'
 import BatchAttribute from '../pages/mdm/config_management/batch_attribute'
 import BarcodeParseRule from '../pages/mdm/config_management/barcode_parse_rule'
 import ParameterConfig from '../pages/mdm/config_management/param_config'
-
+import Dictionary from '../pages/mdm/config_management/dictionary'
 
 import WarehouseManage from '../pages/wms/basic/warehouse/warehouse_management'
 import WarehouseAreaGroupManage from '../pages/wms/basic/warehouse/warehouse_area_group'
@@ -20,7 +20,7 @@ import WarehouseAreaManage from '../pages/wms/basic/warehouse/warehouse_area'
 import WarehouseLogicManage from '../pages/wms/basic/warehouse/warehouse_logic'
 
 import WorkStationManage from '../pages/wms/basic/station/work_station'
-
+import ContainerStock from '../pages/wms/stock/container_stock'
 
 const path2components = [
     {
@@ -77,7 +77,10 @@ const path2components = [
         path: '/mdm/config-center/parameter-config',
         component: ParameterConfig
     },
-
+    {
+        path: '/mdm/config-center/dictionary',
+        component: Dictionary
+    },
 
     //WMS System
     {
@@ -100,6 +103,11 @@ const path2components = [
     {
         path: '/wms/basic-info/work-station-manage',
         component: WorkStationManage
+    },
+
+    {
+        path: '/wms/stock/container-stock',
+        component: ContainerStock
     },
 
 ]
