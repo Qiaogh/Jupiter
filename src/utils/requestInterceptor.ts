@@ -13,6 +13,11 @@ export default function request(config: AxiosRequestConfig) {
     config.headers["Authorization"] = <string>localStorage.getItem("Authorization")
     config.headers["X-TenantID"] = "test0"
 
+    //所有WMS的请求都在请求报文中增加warehouseCode
+    // if (config.url.indexOf("/gw/wms") > -1) {
+    //     config.data ={...config.data,{"warehouseCode":"123"}}
+    // }
+
     return new Promise((resolve, reject) => {
         let onSuccess = (res: any) => {
             if (res.data == null) {

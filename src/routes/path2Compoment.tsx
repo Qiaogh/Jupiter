@@ -19,6 +19,9 @@ import WarehouseAreaGroupManage from '../pages/wms/basic/warehouse/warehouse_are
 import WarehouseAreaManage from '../pages/wms/basic/warehouse/warehouse_area'
 import WarehouseLogicManage from '../pages/wms/basic/warehouse/warehouse_logic'
 
+import ContainerSpecManage from '../pages/wms/basic/container/container_spec'
+import ContainerManage from '../pages/wms/basic/container/container'
+
 import WorkStationManage from '../pages/wms/basic/station/work_station'
 import ContainerStock from '../pages/wms/stock/container_stock'
 
@@ -106,9 +109,19 @@ const path2components = [
     },
 
     {
+        path: '/wms/basic-info/container-spec-manage',
+        component: ContainerSpecManage
+    },
+    {
+        path: '/wms/basic-info/container-manage',
+        component: ContainerManage
+    },
+
+    {
         path: '/wms/stock/container-stock',
         component: ContainerStock
     },
+
 
 ]
 

@@ -1,8 +1,9 @@
 import schema2component from "../../../../utils/schema2component";
 import {owner_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
 import {true_false_options} from "@/utils/commonContants";
+import {volume} from "@/pages/mdm/main_data/constants/form_constants";
 
-const form = [
+const fromBody = [
     {
         "type": "hidden",
         "name": "id"
@@ -12,109 +13,93 @@ const form = [
         "name": "version"
     },
     {
-        "label": "规则编码",
+        "label": "规格编码",
         "type": "input-text",
-        "name": "code",
+        "name": "containerSpecCode",
         "required": true
     },
     {
-        "label": "规则名称",
+        "label": "规格名称",
         "type": "input-text",
-        "name": "name",
+        "name": "containerSpecName",
         "required": true
     },
     {
+        "label": "容器类型",
         "type": "select",
-        "name": "ownerCode",
-        "label": "货主",
-        "source": owner_search_api
-
+        "name": "containerType",
+        "source": "${ContainerType}",
+        "required": true
     },
     {
-        "label": "商品大类",
-        "type": "select",
-        "name": "skuFirstCategory",
-        "source": "${SkuFirstCategory}",
+        "label": "行",
+        "type": "input-number",
+        "name": "level",
+        "required": true
     },
+    {
+        "label": "列",
+        "type": "input-number",
+        "name": "bay",
+        "required": true
+    },
+    ...volume,
     {
         "type": "input-table",
-        "name": "batchAttributeFieldConfigs",
+        "name": "containerSlotSpecs",
         "addable": true,
         "copyable": true,
         "editable": true,
-        "showFooterAddBtn": false,
-        "value": [
-            {
-                "fieldCode": "inboundDate",
-                "fieldName": "入库日期"
-            },
-            {
-                "fieldCode": "productDate",
-                "fieldName": "生产日期"
-            },
-            {
-                "fieldCode": "expiredDate",
-                "fieldName": "到期日期"
-            }
-        ],
         "columns": [
+            ...volume,
             {
-                "name": "fieldCode",
-                "label": "批次属性编码",
+                "name": "containerSlotSpecCode",
+                "label": "格口编码",
                 "type": "input-text"
             },
             {
-                "name": "fieldName",
-                "label": "批次属性",
+                "name": "face",
+                "label": "朝向",
                 "type": "input-text"
 
-            },
-            {
-                "name": "required",
-                "label": "是否必填",
-                "type": "select",
-                "options": true_false_options
-            },
-            {
-                "name": "keyAttribute",
-                "label": "关键属性",
-                "type": "select",
-                "options": true_false_options
-            },
-            // {
-            //     "name": "format",
-            //     "label": "给是",
-            //     "type": "select",
-            // },
-            {
-                "name": "enable",
-                "label": "启用",
-                "type": "select",
-                "options": true_false_options
             }
         ]
     }
 ]
+
+const form = {
+    "type": "form",
+    "api": {
+        url: "post:/wms/containerSpec/createOrUpdate",
+        requestAdaptor: function (api: { data: any; }) {
+            return {
+                ...api,
+                data: {
+                    ...api.data, // 获取暴露的 api 中的 data 变量
+                    "warehouseCode": "123" // 新添加数据
+                }
+            };
+        }
+    },
+    body: fromBody
+}
 
 const add = {
     "type": "button",
     "actionType": "dialog",
     "icon": "fa fa-plus",
     "label": "新增",
+    "target": "role",
     "closeOnOutside": true,
     "dialog": {
-        "title": "新增",
         "size": "lg",
-        "body": {
-            "type": "form",
-            "api": "post:/mdm/batchAttributeConfig/createOrUpdate",
-            "body": form
-        }
+        "title": "新增",
+        "body": form
     }
 }
 
+
 const actions = [
-    add,
     {
         "type": "reset",
         "label": "重置"
@@ -138,20 +123,32 @@ const columns = [
         hidden: true
     },
     {
-        name: "code",
-        label: "规则编码",
+        name: "containerSpecCode",
+        label: "规格编码",
     },
     {
-        name: "name",
-        label: "规则名称",
+        name: "containerSpecName",
+        label: "规格名称",
     },
     {
-        name: "ownerCode",
-        label: "货主",
+        name: "containerType",
+        label: "容器类型",
     },
     {
-        name: "skuFirstCategory",
-        label: "商品大类",
+        "label": "体积",
+        "name": "volume"
+    },
+    {
+        "label": "长",
+        "name": "length"
+    },
+    {
+        "label": "宽",
+        "name": "width"
+    },
+    {
+        "label": "高",
+        "name": "height"
     },
     {
         name: "createUser",
@@ -167,7 +164,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "BatchAttributeConfig";
+const searchIdentity = "ContainerSpec";
 const showColumns = columns;
 
 const filter = {
@@ -177,27 +174,27 @@ const filter = {
             "type": "group",
             "body": [
                 {
-                    "label": "编码",
+                    "label": "规格编码",
                     "type": "input-text",
-                    "name": "code",
+                    "name": "containerSpecCode",
                     "clearable": true,
                     "size": "sm",
                     "op": "eq"
                 },
                 {
-                    "label": "名称",
+                    "label": "规格名称",
                     "type": "input-text",
-                    "name": "name",
+                    "name": "containerSpecName",
                     "clearable": true,
                     "size": "sm",
                     "op": "eq"
                 },
                 {
-                    "label": "货主",
+                    "label": "容器类型",
                     "type": "select",
-                    "name": "ownerCode",
+                    "name": "containerType",
                     "clearable": true,
-                    "source": owner_search_api,
+                    "source": "${ContainerType}",
                     "size": "sm",
                     "op": "eq"
                 },
@@ -229,13 +226,13 @@ const searchFilter =
 
 const schema = {
     type: 'page',
-    title: '批次管理',
+    title: '容器规格管理',
     toolbar: [],
     initApi: "/mdm/dictionary/getAll",
     body: [
         {
             type: "crud",
-            name: "batchAttributeTable",
+            name: "ContainerSpecTable",
             api: {
                 method: "POST",
                 url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
@@ -245,6 +242,16 @@ const schema = {
                 "searchIdentity": searchIdentity,
                 "showColumns": showColumns
             },
+            headerToolbar: [
+                add,
+                "reload",
+                {
+                    "type": "export-excel",
+                    "label": "导出",
+                    "api": "/search/search?page=${1}&perPage=${100000}&" + searchFilter,
+                    "fileName": "container_spec"
+                }
+            ],
             filter: filter,
             footerToolbar: ["switch-per-page", "statistics", "pagination"],
             columns: [
@@ -258,19 +265,20 @@ const schema = {
                             "label": "修改",
                             "type": "button",
                             "actionType": "dialog",
-                            "dialog": {
-                                "title": "修改",
-                                "size": "lg",
-                                "body": {
-                                    "type": "form",
-                                    "initApi": {
-                                        "url": "/mdm/batchAttributeConfig/${id}",
-                                        "method": "get"
-                                    },
-                                    "api": "post:/mdm/batchAttributeConfig/createOrUpdate",
-                                    "controls": form
+                            "dialog":
+                                {
+                                    "title": "修改",
+                                    "size": "lg",
+                                    "body": {
+                                        "type": "form",
+                                        "initApi": {
+                                            "url": "/wms/containerSpec/${id}",
+                                            "method": "get"
+                                        },
+                                        "api": "post:/wms/containerSpec/createOrUpdate",
+                                        "controls": fromBody
+                                    }
                                 }
-                            }
                         }
                     ],
                     toggled: true
