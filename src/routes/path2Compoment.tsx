@@ -23,6 +23,8 @@ import ContainerSpecManage from '../pages/wms/basic/container/container_spec'
 import ContainerManage from '../pages/wms/basic/container/container'
 
 import WorkStationManage from '../pages/wms/basic/station/work_station'
+import PutWallManage from '../pages/wms/basic/station/put_wall'
+
 import ContainerStock from '../pages/wms/stock/container_stock'
 
 const path2components = [
@@ -106,6 +108,10 @@ const path2components = [
     {
         path: '/wms/basic-info/work-station-manage',
         component: WorkStationManage
+    },
+    {
+        path: '/wms/basic-info/put-wall-manage',
+        component: PutWallManage
     },
 
     {

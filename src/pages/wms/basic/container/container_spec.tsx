@@ -31,18 +31,6 @@ const fromBody = [
         "source": "${ContainerType}",
         "required": true
     },
-    {
-        "label": "行",
-        "type": "input-number",
-        "name": "level",
-        "required": true
-    },
-    {
-        "label": "列",
-        "type": "input-number",
-        "name": "bay",
-        "required": true
-    },
     ...volume,
     {
         "type": "input-table",
@@ -59,9 +47,28 @@ const fromBody = [
             },
             {
                 "name": "face",
-                "label": "朝向",
+                "label": "面/墙编码",
                 "type": "input-text"
-
+            },
+            {
+                "name": "level",
+                "label": "面层",
+                "type": "input-number"
+            },
+            {
+                "name": "bay",
+                "label": "面列",
+                "type": "input-number"
+            },
+            {
+                "name": "locLevel",
+                "label": "格口所在的层",
+                "type": "input-number"
+            },
+            {
+                "name": "locBay",
+                "label": "格口所在的列",
+                "type": "input-number"
             }
         ]
     }

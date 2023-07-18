@@ -4,7 +4,7 @@ import {container_spec, work_station} from "@/pages/wms/constants/select_search_
 const form = {
     "type": "form",
     "api": {
-        url: "post:/wms/workStation/createOrUpdate",
+        url: "post:/wms/putWall/createOrUpdate",
         requestAdaptor: function (api: { data: any; }) {
             return {
                 ...api,
@@ -45,7 +45,7 @@ const form = {
         },
         {
             "label": "规格编码",
-            "name": "container_spec_code",
+            "name": "containerSpecCode",
             "type": "select",
             "source": container_spec,
             "required": true
@@ -98,6 +98,10 @@ const columns = [
     {
         name: "putWallName",
         label: "播种墙名称",
+    },
+    {
+        name: "containerSpecCode",
+        label: "容器规格编码",
     },
     {
         name: "createTime",
@@ -187,6 +191,15 @@ const schema = {
                     label: "操作",
                     width: 100,
                     buttons: [
+                        {
+                            "label": "修改",
+                            "type": "button",
+                            "actionType": "drawer",
+                            "drawer": {
+                                "title": "修改",
+                                "body": form
+                            }
+                        }
                     ],
                     toggled: true
                 }
