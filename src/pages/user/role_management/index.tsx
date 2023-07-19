@@ -35,9 +35,10 @@ const add = {
     "actionType": "drawer",
     "icon": "fa fa-plus",
     "label": "新增",
-    "target": "role",
+    "target": "RoleTable",
     "closeOnOutside": true,
     "drawer": {
+        "size": "lg",
         "title": "新增",
         "body": {
             "type": "form",
@@ -48,7 +49,6 @@ const add = {
 }
 
 const actions = [
-    add,
     {
         "type": "reset",
         "label": "重置"
@@ -71,7 +71,23 @@ const filter = {
                     "type": "input-text",
                     "name": "name",
                     "clearable": true,
-                    "size": "sm"
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "label": "创建人",
+                    "type": "input-text",
+                    "name": "createUser",
+                    "clearable": true,
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "type": "input-date-range",
+                    "name": "createTime",
+                    "label": "创建时间",
+                    "clearable": true,
+                    "op": "bt"
                 }
             ]
         }
@@ -79,17 +95,47 @@ const filter = {
     actions: actions
 }
 
+const columns = [
+    {
+        name: "id",
+        label: "ID",
+    },
+    {
+        name: "name",
+        label: "角色名称",
+    },
+    {
+        name: "code",
+        label: "角色编码",
+    },
+    {
+        name: 'status',
+        label: '状态'
+    }
+]
+
 const menuTree = [
     {
         "type": "input-tree",
         "name": "menus",
         "label": "菜单权限",
+        "labelField": "title",
+        "valueField": "id",
         "multiple": true,
         "initiallyOpen": false,
         "withChildren": true,
         "pathSeparator": "/",
         "source": "get:/user/api/role/getRoleMenu/${id}"
     }];
+
+const searchIdentity = "Role";
+const showColumns = columns;
+
+const searchFilter =
+    filter.body[0].body.map(value => {
+        return value.name + "-op=" + value.op;
+    }).join("&");
+
 
 const schema = {
     type: 'page',
@@ -98,31 +144,30 @@ const schema = {
     body: [
         {
             type: "crud",
-            name: "role",
+            name: "RoleTable",
             api: {
                 method: "POST",
-                url: "/user/api/role/search?page=${page}&perPage=${perPage}",
+                url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
                 dataType: "application/json"
             },
+            defaultParams: {
+                "searchIdentity": searchIdentity,
+                "showColumns": showColumns
+            },
             filter: filter,
+            headerToolbar: [
+                add,
+                "reload",
+                {
+                    "type": "export-excel",
+                    "label": "导出",
+                    "api": "/search/search?page=${1}&perPage=${100000}&" + searchFilter,
+                    "fileName": "container"
+                }
+            ],
             footerToolbar: ["switch-per-page", "statistics", "pagination"],
             columns: [
-                {
-                    name: "id",
-                    label: "ID",
-                },
-                {
-                    name: "name",
-                    label: "角色名称",
-                },
-                {
-                    name: "code",
-                    label: "角色编码",
-                },
-                {
-                    name: 'status',
-                    label: '状态'
-                },
+                ...columns,
                 {
                     type: "operation",
                     label: "操作",

@@ -23,13 +23,50 @@ const filter = {
                     "type": "input-text",
                     "name": "username",
                     "clearable": true,
-                    "size": "sm"
+                    "size": "sm",
+                    "op": "eq"
                 }
             ]
         }
     ],
     actions: actions
 }
+
+const columns = [
+    {
+        name: "id",
+        label: "ID",
+    },
+    {
+        name: "username",
+        label: "用户登录名称",
+    },
+    {
+        name: "gmtLoginTime",
+        label: "登录时间",
+    },
+    {
+        name: 'loginResult',
+        label: '登录结果'
+    },
+    {
+        name: 'loginAddress',
+        label: '登录地址'
+    },
+    {
+        name: 'loginFailureMsg',
+        label: '登录失败原因'
+    }
+]
+
+const searchIdentity = "LoginLog";
+const showColumns = columns;
+
+const searchFilter =
+    filter.body[0].body.map(value => {
+        return value.name + "-op=" + value.op;
+    }).join("&");
+
 
 const schema = {
     type: 'page',
@@ -38,40 +75,19 @@ const schema = {
     body: [
         {
             type: "crud",
-            name: "role",
+            name: "LoginLogTable",
             api: {
                 method: "POST",
-                url: "/user/api/loginLog/search?page=${page}&perPage=${perPage}",
+                url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
                 dataType: "application/json"
+            },
+            defaultParams: {
+                "searchIdentity": searchIdentity,
+                "showColumns": showColumns
             },
             filter: filter,
             footerToolbar: ["switch-per-page", "statistics", "pagination"],
-            columns: [
-                {
-                    name: "id",
-                    label: "ID",
-                },
-                {
-                    name: "username",
-                    label: "用户登录名称",
-                },
-                {
-                    name: "gmtLoginTime",
-                    label: "登录时间",
-                },
-                {
-                    name: 'loginResult',
-                    label: '登录结果'
-                },
-                {
-                    name: 'loginAddress',
-                    label: '登录地址'
-                },
-                {
-                    name: 'loginFailureMsg',
-                    label: '登录失败原因'
-                }
-            ]
+            columns: columns
         }
     ]
 };

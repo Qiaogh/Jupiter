@@ -7,7 +7,7 @@ import request from '@/utils/requestInterceptor';
 import RouterGuard from "@/routes/RouterGuard";
 
 type NavItem = {
-    label: string;
+    title: string;
     children?: Array<NavItem>;
     icon?: string;
     path?: string;
@@ -191,7 +191,7 @@ export default class Admin extends React.Component<AdminProps, any> {
                     }
 
                     children.push(
-                        <span key="label" className={cx('AsideNav-itemLabel')}>{link.label}</span>
+                        <span key="label" className={cx('AsideNav-itemLabel')}>{link.title}</span>
                     );
 
                     return link.path

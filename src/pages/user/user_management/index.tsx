@@ -49,12 +49,14 @@ const form = [
 ]
 
 const add = {
-    "label": "新增",
     "type": "button",
-    "actionType": "dialog",
-    "level": "primary",
-    "className": "m-b-sm",
-    "dialog": {
+    "actionType": "drawer",
+    "icon": "fa fa-plus",
+    "label": "新增",
+    "target": "UserTable",
+    "closeOnOutside": true,
+    "drawer": {
+        "size": "lg",
         "title": "新增",
         "body": {
             "type": "form",
@@ -62,7 +64,79 @@ const add = {
             "body": form
         }
     }
-};
+}
+
+const columns = [
+    {
+        name: "id",
+        label: "ID",
+    },
+    {
+        name: "name",
+        label: "姓名",
+    },
+    {
+        name: "username",
+        label: "登录用户名称",
+    },
+    {
+        name: "email",
+        label: "邮箱"
+    },
+    {
+        name: "phone",
+        label: "手机号"
+    },
+    {
+        name: 'status',
+        label: '状态'
+    },
+    {
+        name: 'lastLoginIp',
+        label: '登录ip'
+    }
+]
+const filter = {
+    "title": "条件搜索",
+    "body": [
+        {
+            "type": "group",
+            "body": [
+                {
+                    "label": "用户名称",
+                    "type": "input-text",
+                    "name": "username",
+                    "clearable": true,
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "label": "创建人",
+                    "type": "input-text",
+                    "name": "createUser",
+                    "clearable": true,
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "type": "input-date-range",
+                    "name": "createTime",
+                    "label": "创建时间",
+                    "clearable": true,
+                    "op": "bt"
+                }
+            ]
+        }
+    ],
+}
+
+const searchIdentity = "User";
+const showColumns = columns;
+
+const searchFilter =
+    filter.body[0].body.map(value => {
+        return value.name + "-op=" + value.op;
+    }).join("&");
 
 const schema = {
     type: 'page',
@@ -71,53 +145,30 @@ const schema = {
     body: [
         {
             type: "crud",
+            name: "UserTable",
             api: {
                 method: "POST",
-                url: "/user/api/user/search?page=${page}&perPage=${perPage}",
+                url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
                 dataType: "application/json"
             },
-            filter: {
-                title: "",
-                submitText: "",
-                controls: [
-                    {
-                        type: "text",
-                        name: "username",
-                        placeholder: "用户名称",
-                        addOn: {
-                            label: "搜索",
-                            type: "submit"
-                        }
-                    }
-                ]
+            defaultParams: {
+                "searchIdentity": searchIdentity,
+                "showColumns": showColumns
             },
-            add,
+            filter: filter,
+            headerToolbar: [
+                add,
+                "reload",
+                {
+                    "type": "export-excel",
+                    "label": "导出",
+                    "api": "/search/search?page=${1}&perPage=${100000}&" + searchFilter,
+                    "fileName": "user"
+                }
+            ],
             footerToolbar: ["switch-per-page", "statistics", "pagination"],
             columns: [
-                {
-                    name: "id",
-                    label: "ID",
-                },
-                {
-                    name: "name",
-                    label: "姓名",
-                },
-                {
-                    name: "username",
-                    label: "登录用户名称",
-                },
-                {
-                    name: "roleNames",
-                    label: "角色"
-                },
-                {
-                    name: 'status',
-                    label: '状态'
-                },
-                {
-                    name: 'lastLoginIp',
-                    label: '登录ip'
-                },
+                ...columns,
                 {
                     type: "operation",
                     label: "操作",
@@ -156,8 +207,7 @@ const schema = {
                     toggled: true
                 }
             ]
-        },
-        add
+        }
     ]
 };
 
