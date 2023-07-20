@@ -13,3 +13,23 @@ export const enable_options = [{
     value: false,
     label: "禁用"
 }]
+
+
+export const create_update_columns = [
+    {
+        "label": "创建人",
+        "name": "createUser"
+    },
+    {
+        "name": "createTime",
+        "label": "创建时间"
+    },
+    {
+        "label": "修改人",
+        "name": "updateUser"
+    },
+    {
+        "label": "修改人",
+        "name": "updateTime"
+    }
+]

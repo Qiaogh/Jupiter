@@ -1,9 +1,9 @@
 import * as React from "react";
-import Dashboard from "../pages/admin/Dashboard";
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import User from '../pages/user/user_management';
 import Role from '../pages/user/role_management';
+import Menu from '../pages/user/menu_management';
 import LoginLog from '../pages/user/login_log'
 
 import WarehouseMainData from '../pages/mdm/main_data/warehouse'
@@ -41,16 +41,16 @@ const path2components = [
         component: Register
     },
     {
-        path: '/dashboard',
-        component: Dashboard
-    },
-    {
         path: '/user/user-manage',
         component: User
     },
     {
         path: '/user/role-manage',
         component: Role
+    },
+    {
+        path: '/menu/menu-manage',
+        component: Menu
     },
     {
         path: '/user/login-log-manage',

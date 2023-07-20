@@ -1,11 +1,7 @@
 import schema2component from "../../../utils/schema2component";
-import {
-    api_role_add, api_role_delete,
-    api_role_get_role_menu,
-    api_role_update,
-    api_role_update_role_menu
-} from "@/pages/user/constants/api_constant";
+import {api_menu_add, api_menu_delete, api_menu_update} from "@/pages/user/constants/api_constant";
 import {create_update_columns} from "@/utils/commonContants";
+import {menu_search_api} from "@/pages/user/constants/select_search_api_constant";
 
 const form = [
     {
@@ -13,14 +9,31 @@ const form = [
         "name": "id"
     },
     {
-        "label": "角色编码",
-        "type": "input-text",
-        "name": "code"
+        "label": "系统编码",
+        "type": "select",
+        "name": "systemCode",
+        "source": "${SystemCode}",
+        required: true
     },
     {
-        "label": "角色名称",
+        "label": "上级菜单",
+        "type": "select",
+        "name": "parentId",
+        "searchable": true,
+        "source": menu_search_api
+    },
+    {
+        "label": "菜单类型",
+        "type": "select",
+        "name": "type",
+        "source": "${MenuType}",
+        required: true
+    },
+    {
+        "label": "名称",
         "type": "input-text",
-        "name": "name"
+        "name": "title",
+        required: true
     },
     {
         "label": "描述",
@@ -28,12 +41,34 @@ const form = [
         "name": "description"
     },
     {
+        "label": "权限",
+        "type": "input-text",
+        "name": "permissions"
+    },
+    {
+        "label": "排序",
+        "type": "input-number",
+        "name": "orderNum",
+        required: true
+    },
+    {
+        "label": "图标",
+        "type": "input-text",
+        "name": "icon"
+    },
+    {
+        "label": "路径地址",
+        "type": "input-text",
+        "name": "path"
+    },
+    {
         "label": "状态",
         "type": "switch",
-        "name": "status",
+        "name": "enable",
         "value": 1,
         "trueValue": 1,
-        "falseValue": 0
+        "falseValue": 0,
+        required: true
     }
 ]
 
@@ -42,14 +77,14 @@ const add = {
     "actionType": "drawer",
     "icon": "fa fa-plus",
     "label": "新增",
-    "target": "RoleTable",
+    "target": "MenuTable",
     "closeOnOutside": true,
     "drawer": {
         "size": "lg",
         "title": "新增",
         "body": {
             "type": "form",
-            "api": api_role_add,
+            "api": api_menu_add,
             "body": form
         }
     }
@@ -74,9 +109,9 @@ const filter = {
             "type": "group",
             "body": [
                 {
-                    "label": "角色名称",
+                    "label": "菜单名称",
                     "type": "input-text",
-                    "name": "name",
+                    "name": "title",
                     "clearable": true,
                     "size": "sm",
                     "op": "eq"
@@ -104,39 +139,55 @@ const filter = {
 
 const columns = [
     {
+        hidden: true,
         name: "id",
         label: "ID",
     },
     {
-        name: "name",
-        label: "角色名称",
+        hidden: true,
+        name: "parentId",
+        label: "parentId",
     },
     {
-        name: "code",
-        label: "角色编码",
+        name: "title",
+        label: "菜单名称",
     },
     {
-        name: 'status',
+        name: "systemCode",
+        label: "所属系统",
+    },
+    {
+        name: "type",
+        label: "类型",
+    },
+    {
+        name: "description",
+        label: "描述",
+    },
+    {
+        name: "permissions",
+        label: "权限标识",
+    },
+    {
+        name: "orderNum",
+        label: "排序",
+    },
+    {
+        name: "icon",
+        label: "图标",
+    },
+    {
+        name: "path",
+        label: "路径地址",
+    },
+    {
+        name: 'enable',
         label: '状态'
     },
     ...create_update_columns
 ]
 
-const menuTree = [
-    {
-        "type": "input-tree",
-        "name": "menus",
-        "label": "菜单权限",
-        "labelField": "title",
-        "valueField": "id",
-        "multiple": true,
-        "initiallyOpen": false,
-        "withChildren": true,
-        "pathSeparator": "/",
-        "source": api_role_get_role_menu
-    }];
-
-const searchIdentity = "Role";
+const searchIdentity = "Menu";
 const showColumns = columns;
 
 const searchFilter =
@@ -147,12 +198,13 @@ const searchFilter =
 
 const schema = {
     type: 'page',
-    title: '角色管理',
+    title: '菜单管理',
     toolbar: [],
+    initApi: "/mdm/dictionary/getAll",
     body: [
         {
             type: "crud",
-            name: "RoleTable",
+            name: "MenuTable",
             api: {
                 method: "POST",
                 url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
@@ -189,8 +241,7 @@ const schema = {
                                 "title": "修改",
                                 "body": {
                                     "type": "form",
-                                    // "initApi": "get:/user/api/user/${id}",
-                                    "api": api_role_update,
+                                    "api": api_menu_update,
                                     "body": form
                                 }
                             }
@@ -201,21 +252,8 @@ const schema = {
                             "actionType": "ajax",
                             "level": "danger",
                             "confirmText": "确认要删除？",
-                            "api": api_role_delete
-                        },
-                        {
-                            "label": "分配权限",
-                            "type": "button",
-                            "actionType": "drawer",
-                            "drawer": {
-                                "title": "分配权限",
-                                "body": {
-                                    "type": "form",
-                                    "api": api_role_update_role_menu,
-                                    "body": menuTree
-                                }
-                            }
-                        },
+                            "api": api_menu_delete
+                        }
                     ],
                     toggled: true
                 }

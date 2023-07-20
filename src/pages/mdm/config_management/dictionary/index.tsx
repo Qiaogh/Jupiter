@@ -1,6 +1,11 @@
 import schema2component from "../../../../utils/schema2component";
 import {owner_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
 import {true_false_options} from "@/utils/commonContants";
+import {
+    api_dictionary_add,
+    api_dictionary_get,
+    api_dictionary_update
+} from "@/pages/mdm/config_management/constants/api_constant";
 
 const form = [
     {
@@ -82,7 +87,7 @@ const add = {
         "size": "lg",
         "body": {
             "type": "form",
-            "api": "post:/mdm/dictionary/createOrUpdate",
+            "api": api_dictionary_add,
             "body": form
         }
     }
@@ -229,8 +234,8 @@ const schema = {
                                 "size": "lg",
                                 "body": {
                                     "type": "form",
-                                    "initApi": "get:/mdm/dictionary/${id}",
-                                    "api": "post:/mdm/dictionary/createOrUpdate",
+                                    "initApi": api_dictionary_get,
+                                    "api": api_dictionary_update,
                                     "controls": form
                                 }
                             }

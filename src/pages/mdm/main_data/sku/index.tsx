@@ -1,6 +1,7 @@
 import schema2component from "../../../../utils/schema2component";
 import {volume, weight} from "@/pages/mdm/main_data/constants/form_constants";
 import {owner_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
+import {api_sku_add, api_sku_get, api_sku_update} from "@/pages/mdm/main_data/constants/api_constant";
 
 const form = [
     {
@@ -163,7 +164,7 @@ const add = {
         "title": "新增",
         "body": {
             "type": "form",
-            "api": "post:/mdm/skuMainData/createOrUpdate",
+            "api": api_sku_add,
             "body": form
         }
     }
@@ -345,8 +346,8 @@ const schema = {
                                 "title": "修改",
                                 "body": {
                                     "type": "form",
-                                    initApi: "get:/mdm/skuMainData/${id}",
-                                    "api": "post:/mdm/skuMainData/createOrUpdate",
+                                    initApi: api_sku_get,
+                                    "api": api_sku_update,
                                     "controls": form
                                 }
                             }

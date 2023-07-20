@@ -1,5 +1,6 @@
 import schema2component from "../../../../utils/schema2component";
 import {address, contactor} from "@/pages/mdm/main_data/constants/form_constants";
+import {api_warehouse_add, api_warehouse_update} from "@/pages/mdm/main_data/constants/api_constant";
 
 const form = [
     {
@@ -87,7 +88,7 @@ const add = {
         "title": "新增",
         "body": {
             "type": "form",
-            "api": "post:/mdm/warehouseMainData/createOrUpdate",
+            "api": api_warehouse_add,
             "body": form
         }
     }
@@ -277,7 +278,7 @@ const schema = {
                                 "title": "修改",
                                 "body": {
                                     "type": "form",
-                                    "api": "post:/mdm/warehouseMainData/createOrUpdate",
+                                    "api": api_warehouse_update,
                                     "body": form
                                 }
                             }

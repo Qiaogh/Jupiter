@@ -1,5 +1,13 @@
 import schema2component from "../../../utils/schema2component";
-import {role_search_api} from "@/pages/user/constants/select_search_api_contant";
+import {role_search_api} from "@/pages/user/constants/select_search_api_constant";
+import {
+    api_user_add,
+    api_user_delete,
+    api_user_get,
+    api_user_reset_password,
+    api_user_update
+} from "@/pages/user/constants/api_constant";
+import {create_update_columns} from "@/utils/commonContants";
 
 const form = [
     {
@@ -60,7 +68,7 @@ const add = {
         "title": "新增",
         "body": {
             "type": "form",
-            "api": "post:/user/api/user/add",
+            "api": api_user_add,
             "body": form
         }
     }
@@ -94,7 +102,8 @@ const columns = [
     {
         name: 'lastLoginIp',
         label: '登录ip'
-    }
+    },
+    ...create_update_columns
 ]
 const filter = {
     "title": "条件搜索",
@@ -182,8 +191,8 @@ const schema = {
                                 "title": "修改",
                                 "body": {
                                     "type": "form",
-                                    "initApi": "get:/user/api/user/${id}",
-                                    "api": "post:/user/api/user/update",
+                                    "initApi": api_user_get,
+                                    "api": api_user_update,
                                     "body": form
                                 }
                             }
@@ -194,14 +203,14 @@ const schema = {
                             "actionType": "ajax",
                             "level": "danger",
                             "confirmText": "确认要删除？",
-                            "api": "delete:/user/api/user/${id}"
+                            "api": api_user_delete
                         },
                         {
                             "label": "重置密码",
                             "type": "button",
                             "actionType": "ajax",
                             "confirmText": "确认要重置密码？",
-                            "api": "post:/user/api/user/resetPassword/${id}"
+                            "api": api_user_reset_password
                         }
                     ],
                     toggled: true

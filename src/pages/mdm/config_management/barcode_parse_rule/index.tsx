@@ -1,5 +1,9 @@
 import schema2component from "../../../../utils/schema2component";
 import {owner_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
+import {
+    api_barcode_parse_rule_add,
+    api_barcode_parse_rule_get, api_barcode_parse_rule_update
+} from "@/pages/mdm/config_management/constants/api_constant";
 
 const form = [
     {
@@ -84,7 +88,7 @@ const add = {
         "size": "lg",
         "body": {
             "type": "form",
-            "api": "post:/mdm/barcodeParseRule/createOrUpdate",
+            "api": api_barcode_parse_rule_add,
             "body": form
         }
     }
@@ -239,8 +243,8 @@ const schema = {
                                 "size": "lg",
                                 "body": {
                                     "type": "form",
-                                    initApi: "get:/mdm/barcodeParseRule/${id}",
-                                    "api": "post:/mdm/barcodeParseRule/createOrUpdate",
+                                    initApi: api_barcode_parse_rule_get,
+                                    "api": api_barcode_parse_rule_update,
                                     "controls": form
                                 }
                             }

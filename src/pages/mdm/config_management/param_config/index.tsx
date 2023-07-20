@@ -1,5 +1,9 @@
 import schema2component from "../../../../utils/schema2component";
-import {owner_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
+import {
+    api_param_config_add,
+    api_param_config_get,
+    api_param_config_update
+} from "@/pages/mdm/config_management/constants/api_constant";
 
 const form = [
     {
@@ -72,7 +76,7 @@ const add = {
         "size": "lg",
         "body": {
             "type": "form",
-            "api": "post:/mdm/parameterConfig/createOrUpdate",
+            "api": api_param_config_add,
             "body": form
         }
     }
@@ -231,8 +235,8 @@ const schema = {
                                 "size": "lg",
                                 "body": {
                                     "type": "form",
-                                    initApi: "get:/mdm/parameterConfig/${id}",
-                                    "api": "post:/mdm/parameterConfig/createOrUpdate",
+                                    initApi: api_param_config_get,
+                                    "api": api_param_config_update,
                                     "controls": form
                                 }
                             }

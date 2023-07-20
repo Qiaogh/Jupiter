@@ -1,6 +1,10 @@
 import schema2component from "../../../../utils/schema2component";
 import {owner_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
 import {true_false_options} from "@/utils/commonContants";
+import {
+    api_batch_attribute_add, api_batch_attribute_get,
+    api_batch_attribute_update
+} from "@/pages/mdm/config_management/constants/api_constant";
 
 const form = [
     {
@@ -107,7 +111,7 @@ const add = {
         "size": "lg",
         "body": {
             "type": "form",
-            "api": "post:/mdm/batchAttributeConfig/createOrUpdate",
+            "api": api_batch_attribute_add,
             "body": form
         }
     }
@@ -264,10 +268,10 @@ const schema = {
                                 "body": {
                                     "type": "form",
                                     "initApi": {
-                                        "url": "/mdm/batchAttributeConfig/${id}",
+                                        "url": api_batch_attribute_get,
                                         "method": "get"
                                     },
-                                    "api": "post:/mdm/batchAttributeConfig/createOrUpdate",
+                                    "api": api_batch_attribute_update,
                                     "controls": form
                                 }
                             }
