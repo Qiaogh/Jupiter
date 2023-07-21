@@ -124,7 +124,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "WarehouseLogic";
+const searchIdentity = "WWarehouseLogic";
 const showColumns = columns;
 
 const filter = {

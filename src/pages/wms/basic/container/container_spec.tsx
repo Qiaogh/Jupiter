@@ -171,7 +171,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "ContainerSpec";
+const searchIdentity = "WContainerSpec";
 const showColumns = columns;
 
 const filter = {

@@ -113,7 +113,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "PutWall";
+const searchIdentity = "WPutWall";
 const showColumns = columns;
 
 const filter = {

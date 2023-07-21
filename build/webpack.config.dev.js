@@ -1,10 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
-const apiMocker = require("mocker-api");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const smp = new SpeedMeasurePlugin();
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 
@@ -77,12 +74,10 @@ webpackConfig = {
     devtool: "inline-source-map",
     devServer: {
         hot: true,
+        host: "test.swms.com",
         port: 4000,
         historyApiFallback: true,
         open: true,
-        // before(app) {
-        //   apiMocker(app, path.resolve("./mock/index.js"));
-        // }
         proxy: {
             '/gw': {
                 target: 'http://localhost:8090',
@@ -92,8 +87,7 @@ webpackConfig = {
                 logLevel: 'debug',
                 pathRewrite: {
                     '^/gw': ''
-                },
-                headers: {"X-TenantID": "test0"}
+                }
             },
         },
     },

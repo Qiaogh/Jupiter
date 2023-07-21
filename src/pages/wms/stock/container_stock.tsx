@@ -138,7 +138,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "ContainerStock";
+const searchIdentity = "WContainerStock";
 const showColumns = columns;
 
 const filter = {

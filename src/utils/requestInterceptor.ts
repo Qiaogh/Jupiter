@@ -1,5 +1,6 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {toast} from "amis";
+import {useLocation} from "react-router";
 
 /**
  * 全局请求拦截，方便对错误进行统一处理
@@ -11,12 +12,11 @@ export default function request(config: AxiosRequestConfig) {
     config.url = "/gw" + config.url;
     config.headers = config.headers || {};
     config.headers["Authorization"] = <string>localStorage.getItem("Authorization")
-    config.headers["X-TenantID"] = "test0"
 
-    //所有WMS的请求都在请求报文中增加warehouseCode
-    // if (config.url.indexOf("/gw/wms") > -1) {
-    //     config.data ={...config.data,{"warehouseCode":"123"}}
-    // }
+    const currentUrl = window.location.href;
+    const domain = new URL(currentUrl).hostname;
+    // Split the domain by dots and get the first part (before the first dot)
+    config.headers["X-TenantID"] = domain.split('.')[0]
 
     return new Promise((resolve, reject) => {
         let onSuccess = (res: any) => {

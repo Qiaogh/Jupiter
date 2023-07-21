@@ -175,7 +175,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "WarehouseArea";
+const searchIdentity = "WWarehouseArea";
 const showColumns = columns;
 
 const filter = {

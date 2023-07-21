@@ -140,7 +140,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "WorkStation";
+const searchIdentity = "WWorkStation";
 const showColumns = columns;
 
 const filter = {
