@@ -147,7 +147,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "Dictionary";
+const searchIdentity = "MDictionary";
 const showColumns = columns;
 
 const filter = {

@@ -171,7 +171,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "BatchAttributeConfig";
+const searchIdentity = "MBatchAttributeConfig";
 const showColumns = columns;
 
 const filter = {

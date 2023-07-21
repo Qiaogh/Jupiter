@@ -252,7 +252,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "SkuMainData";
+const searchIdentity = "MSkuMainData";
 const showColumns = columns;
 
 const filter = {

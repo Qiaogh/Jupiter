@@ -139,7 +139,7 @@ const filter = {
     ],
 }
 
-const searchIdentity = "User";
+const searchIdentity = "UUser";
 const showColumns = columns;
 
 const searchFilter =

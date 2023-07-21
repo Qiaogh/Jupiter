@@ -59,7 +59,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "LoginLog";
+const searchIdentity = "ULoginLog";
 const showColumns = columns;
 
 const searchFilter =

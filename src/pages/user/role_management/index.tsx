@@ -136,7 +136,7 @@ const menuTree = [
         "source": api_role_get_role_menu
     }];
 
-const searchIdentity = "Role";
+const searchIdentity = "URole";
 const showColumns = columns;
 
 const searchFilter =

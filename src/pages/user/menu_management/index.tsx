@@ -187,7 +187,7 @@ const columns = [
     ...create_update_columns
 ]
 
-const searchIdentity = "Menu";
+const searchIdentity = "UMenu";
 const showColumns = columns;
 
 const searchFilter =

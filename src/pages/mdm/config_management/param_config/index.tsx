@@ -140,7 +140,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "ParameterConfig";
+const searchIdentity = "MParameterConfig";
 const showColumns = columns;
 
 const filter = {

@@ -148,7 +148,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "BarcodeParseRule";
+const searchIdentity = "MBarcodeParseRule";
 const showColumns = columns;
 
 const filter = {
