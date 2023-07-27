@@ -2,11 +2,14 @@ import {
     types,
     getEnv
 } from "mobx-state-tree";
-import User  from "./User";
+import User from "./User";
+import Warehouse from "@/stores/Warehouse";
+
 const MainStore = types
     .model('MainStore', {
         theme: 'cxd',
         user: types.optional(User, {}),
+        warehouse: types.optional(Warehouse, {}),
         asideFixed: true,
         asideFolded: false,
         offScreen: false
@@ -43,7 +46,7 @@ const MainStore = types
             toggleAsideFolded,
             toggleAsideFixed,
             toggleOffScreen,
-            afterCreate: function() {
+            afterCreate: function () {
                 self.asideFolded = !!localStorage.getItem('asideFolded');
             }
         };

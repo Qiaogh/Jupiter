@@ -4,7 +4,7 @@ export const warehouse_area_group = {
     "data": {
         "searchIdentity": "SearchWarehouseAreaGroup",
         "searchObject": {
-            "tables": "warehouse_area_group"
+            "tables": "w_warehouse_area_group"
         },
         "showColumns": [
             {
@@ -21,17 +21,40 @@ export const warehouse_area_group = {
     }
 }
 
-export const warehouse_area = {
+export const warehouse_area_code = {
     "method": "post",
     "url": "/search/search/searchSelectResult?perPage=1000&activePage=1",
     "data": {
         "searchIdentity": "SearchWarehouseArea",
         "searchObject": {
-            "tables": "warehouse_area"
+            "tables": "w_warehouse_area"
         },
         "showColumns": [
             {
                 "dbField": "warehouse_area_code",
+                "name": "value",
+                "javaType": "java.lang.String"
+            },
+            {
+                "dbField": "warehouse_area_name",
+                "name": "label",
+                "javaType": "java.lang.String"
+            }
+        ]
+    }
+}
+
+export const warehouse_area_id = {
+    "method": "post",
+    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1",
+    "data": {
+        "searchIdentity": "SearchWarehouseArea",
+        "searchObject": {
+            "tables": "w_warehouse_area"
+        },
+        "showColumns": [
+            {
+                "dbField": "id",
                 "name": "value",
                 "javaType": "java.lang.String"
             },

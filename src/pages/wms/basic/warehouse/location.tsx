@@ -1,10 +1,11 @@
 import schema2component from "../../../../utils/schema2component";
-import {warehouse_area_code} from "@/pages/wms/constants/select_search_api_contant";
+import {enable_options} from "@/utils/commonContants";
+import {warehouse_area_id} from "@/pages/wms/constants/select_search_api_contant";
 
 const form = {
     "type": "form",
     "api": {
-        url: "post:/wms/workStation/createOrUpdate",
+        url: "post:/wms/warehouseLogic/createOrUpdate",
         requestAdaptor: function (api: { data: any; }) {
             return {
                 ...api,
@@ -25,49 +26,30 @@ const form = {
             "name": "version"
         },
         {
-            "label": "工作站编码",
-            "name": "stationCode",
-            "type": "input-text",
-            "required": true
-        },
-        {
-            "label": "工作站名称",
-            "name": "stationName",
-            "type": "input-text",
-            "required": true
-        },
-        {
-            "label": "工作台类型",
-            "name": "workLocationType",
-            "type": "select",
-            "source": "${WorkLocationType}",
-            "required": true
-        },
-        {
-            "label": "终端类型",
-            "name": "terminalType",
-            "type": "select",
-            "source": "${TerminalType}",
-            "required": true
-        },
-        {
-            "label": "所属库区",
+            "label": "库区编码",
             "name": "warehouseAreaCode",
             "type": "select",
-            "source": warehouse_area_code,
-            "required": true
+            "source": warehouse_area_id
         },
         {
-            "label": "任务规则",
-            "name": "stationRuleId",
-            "type": "select"
+            "label": "逻辑区编码",
+            "name": "warehouseLogicCode",
+            "type": "input-text"
         },
         {
-            "label": "可操作业务",
-            "name": "allowOperationTypes",
-            "type": "select",
-            "multiple": true,
-            "source": "${WorkStationOperationType}"
+            "label": "逻辑区名称",
+            "name": "warehouseLogicName",
+            "type": "input-text"
+        },
+        {
+            "label": "备注",
+            "name": "remark",
+            "type": "input-text"
+        },
+        {
+            "label": "状态",
+            "name": "enable",
+            "type": "switch"
         }
     ]
 }
@@ -85,6 +67,7 @@ const add = {
 }
 
 const actions = [
+    add,
     {
         "type": "reset",
         "label": "重置"
@@ -111,23 +94,23 @@ const columns = [
         label: "仓库编码",
     },
     {
-        name: "warehouseAreaCode",
-        label: "所属库区",
+        name: "warehouseAreaId",
+        label: "库区ID",
     },
     {
-        name: "stationCode",
-        label: "工作站编码",
+        name: "warehouseLogicCode",
+        label: "逻辑区编码",
     },
     {
-        name: "stationName",
-        label: "工作站名称",
+        name: "warehouseLogicName",
+        label: "逻辑区名称",
     },
     {
-        name: "operationType",
-        label: "当前操作类型",
+        name: "remark",
+        label: "备注",
     },
     {
-        name: "workStationStatus",
+        name: "enable",
         label: "状态",
     },
     {
@@ -140,7 +123,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "WWorkStation";
+const searchIdentity = "WWarehouseLogic";
 const showColumns = columns;
 
 const filter = {
@@ -158,19 +141,19 @@ const filter = {
                     "op": "eq"
                 },
                 {
-                    "label": "工作站编码",
+                    "label": "逻辑区编码",
                     "type": "input-text",
-                    "name": "stationCode",
+                    "name": "warehouseLogicCode",
                     "clearable": true,
                     "size": "sm",
                     "op": "eq"
                 },
                 {
                     "label": "状态",
-                    "type": "select",
-                    "name": "workStationStatus",
+                    "type": "input-text",
+                    "name": "enable",
                     "clearable": true,
-                    "source": "${WorkStationStatus}",
+                    "options": enable_options,
                     "size": "sm",
                     "op": "eq"
                 },
@@ -201,7 +184,7 @@ const searchFilter =
 
 const schema = {
     type: 'page',
-    title: '工作站管理',
+    title: '仓库管理',
     toolbar: [],
     initApi: "/mdm/dictionary/getAll",
     body: [
@@ -217,7 +200,6 @@ const schema = {
                 "searchIdentity": searchIdentity,
                 "showColumns": showColumns
             },
-            headerToolbar: [add],
             filter: filter,
             footerToolbar: ["switch-per-page", "statistics", "pagination"],
             columns: [
@@ -233,15 +215,6 @@ const schema = {
                             "actionType": "drawer",
                             "drawer": {
                                 "title": "修改",
-                                "body": form
-                            }
-                        },
-                        {
-                            "label": "工作站配置",
-                            "type": "button",
-                            "actionType": "drawer",
-                            "drawer": {
-                                "title": "工作站配置",
                                 "body": form
                             }
                         }

@@ -1,7 +1,7 @@
 import schema2component from "../../../../utils/schema2component";
 import {address, contactor} from "@/pages/mdm/main_data/constants/form_constants";
 import {enable_options} from "@/utils/commonContants";
-import {warehouse_area} from "@/pages/wms/constants/select_search_api_contant";
+import {warehouse_area_code, warehouse_area_id} from "@/pages/wms/constants/select_search_api_contant";
 
 const form = {
     "type": "form",
@@ -30,7 +30,7 @@ const form = {
             "label": "库区编码",
             "name": "warehouseAreaCode",
             "type": "select",
-            "source": warehouse_area
+            "source": warehouse_area_id
         },
         {
             "label": "逻辑区编码",
@@ -95,8 +95,8 @@ const columns = [
         label: "仓库编码",
     },
     {
-        name: "warehouseAreaCode",
-        label: "库区编码",
+        name: "warehouseAreaId",
+        label: "库区ID",
     },
     {
         name: "warehouseLogicCode",

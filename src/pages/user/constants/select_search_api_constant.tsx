@@ -4,7 +4,7 @@ export const role_search_api = {
     "data": {
         "searchIdentity": "SearchRole",
         "searchObject": {
-            "tables": "role",
+            "tables": "u_role",
             "where": "status = 1"
         },
         "showColumns": [
@@ -28,7 +28,7 @@ export const menu_search_api = {
     "data": {
         "searchIdentity": "SearchMenu",
         "searchObject": {
-            "tables": "menu"
+            "tables": "u_menu"
         },
         "showColumns": [
             {

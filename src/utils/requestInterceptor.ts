@@ -1,6 +1,5 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {toast} from "amis";
-import {useLocation} from "react-router";
 
 /**
  * 全局请求拦截，方便对错误进行统一处理
@@ -17,6 +16,11 @@ export default function request(config: AxiosRequestConfig) {
     const domain = new URL(currentUrl).hostname;
     // Split the domain by dots and get the first part (before the first dot)
     config.headers["X-TenantID"] = domain.split('.')[0]
+
+    // debugger
+    // if (typeof config.data === 'object' && config.data !== null && !Array.isArray(config.data)) {
+    //     config.data["warehouseCode"] = localStorage.getItem("warehouseCode");
+    // }
 
     return new Promise((resolve, reject) => {
         let onSuccess = (res: any) => {
