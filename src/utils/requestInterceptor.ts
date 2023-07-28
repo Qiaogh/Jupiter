@@ -16,11 +16,20 @@ export default function request(config: AxiosRequestConfig) {
     const domain = new URL(currentUrl).hostname;
     // Split the domain by dots and get the first part (before the first dot)
     config.headers["X-TenantID"] = domain.split('.')[0]
+    config.headers["X-WarehouseID"] = <string>localStorage.getItem("warehouseCode")
 
-    // debugger
-    // if (typeof config.data === 'object' && config.data !== null && !Array.isArray(config.data)) {
-    //     config.data["warehouseCode"] = localStorage.getItem("warehouseCode");
-    // }
+    if (config.url.startsWith("/gw/wms")
+        && (config.method == 'post' || config.method == 'POST')
+        && config.data != undefined && !Array.isArray(config.data)) {
+        debugger
+        if (config.headers["Content-Type"] == "application/json") {
+            let data = {...JSON.parse(config.data)};
+            data["warehouseCode"] = localStorage.getItem("warehouseCode");
+            config.data = JSON.stringify(data);
+        } else {
+            config.data = localStorage.getItem("warehouseCode");
+        }
+    }
 
     return new Promise((resolve, reject) => {
         let onSuccess = (res: any) => {

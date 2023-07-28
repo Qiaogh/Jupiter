@@ -4,16 +4,7 @@ import {enable_options} from "@/utils/commonContants";
 const form = {
     "type": "form",
     "api": {
-        url: "post:/wms/warehouseAreaGroup/createOrUpdate",
-        requestAdaptor: function (api: { data: any; }) {
-            return {
-                ...api,
-                data: {
-                    ...api.data, // 获取暴露的 api 中的 data 变量
-                    "warehouseCode": "123" // 新添加数据
-                }
-            };
-        }
+        url: "/wms/warehouseAreaGroup/createOrUpdate",
     },
     body: [
         {

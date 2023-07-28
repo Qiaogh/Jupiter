@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Link, matchPath, NavLink, Redirect, RouteComponentProps, Switch} from 'react-router-dom';
-import {AsideNav, Button, Layout, Select, Tab, toast} from 'amis';
+import {Link, matchPath, Redirect, RouteComponentProps, Switch} from 'react-router-dom';
+import {AsideNav, Button, Layout, Select, toast} from 'amis';
 import {IMainStore} from '@/stores';
 import {inject, observer} from 'mobx-react';
 import request from '@/utils/requestInterceptor';
@@ -40,28 +40,13 @@ export default class Admin extends React.Component<AdminProps, any> {
         const onApplicationChange = (value: any) => {
             let menus: any = this.state.menus;
             this.setState({
-                navigations: [menus[value]] || []
+                navigations: [menus[value.value]] || []
             });
         };
 
         const onWarehouseChange = (value: any) => {
             this.props.store.warehouse.setWarehouseCode(value.value)
         }
-
-        const tabs = [
-            {
-                title: 'Tab 1',
-                hash: 'tab1',
-                tab: 'tab1',
-                component: <div>Content 1</div>
-            },
-            {
-                title: 'Tab 2',
-                hash: 'tab2',
-                tab: 'tab2',
-                component: <div>Content 2</div>
-            }
-        ]
 
         return (
             <div>
@@ -92,19 +77,6 @@ export default class Admin extends React.Component<AdminProps, any> {
                     </div>
 
                     <div className="nav navbar-nav hidden-xs pull-left">
-                        <Tab
-                            tabs={tabs}
-                            activeKey={'tab1'}
-                            onChange={onApplicationChange}
-                        />
-                        <nav>
-                            <NavLink to="/">Home</NavLink>
-                            <NavLink to="/about">About</NavLink>
-                            <NavLink to="/contact">Contact</NavLink>
-                        </nav>
-                    </div>
-
-                    <div className="nav navbar-nav hidden-xs pull-left">
                         <Select
                             showSearch
                             placeholder="select warehouse"
@@ -114,17 +86,16 @@ export default class Admin extends React.Component<AdminProps, any> {
                         />
                     </div>
 
-                    {/*<div className="nav navbar-nav hidden-xs pull-left">*/}
-                    {/*<Tab tabs={this.state.applications.map(application => {*/}
-                    {/*    return (<Tab.Item title={application}/>);*/}
-                    {/*})} change={onApplicationChange}/>*/}
+                    <div className="nav navbar-nav hidden-xs pull-left">
+                        <Select
+                            showSearch
+                            placeholder="select application"
+                            optionFilterProp="children"
+                            onChange={onApplicationChange}
+                            options={this.state.applications}
+                        />
+                    </div>
 
-                    <Tab
-                        tabs={tabs}
-                        activeKey={'tab1'}
-                        onChange={onApplicationChange}
-                    />
-                    {/*</div>*/}
 
                     <div className="m-l-auto hidden-xs pull-right">
                         <span>{store.user.name}</span><span className={'btn btn-link'} onClick={this.logout}>[退出]</span>
@@ -173,51 +144,61 @@ export default class Admin extends React.Component<AdminProps, any> {
         if (pathname != 'login' && pathname != '/' && !this.state.hasLoadMenu && store.user.isAuthenticated) {
             request({
                 method: "get",
-                url: '/user/api/currentUser/getMenuTree'
+                url: '/user/api/currentUser/getAuth'
             }).then((res: any) => {
 
-                let menus = res.data;
-                let applications: string[] = Object.keys(res.data);
+                let menus = res.data.menus;
+                let applications: string[] = Object.keys(menus);
                 let navigations = [menus[applications[0]]] || [];
+
+                const options = applications.map(value => {
+                    return {value: value, label: value};
+                })
 
                 this.setState({
                         menus: menus,
                         navigations: navigations,
-                        applications: applications,
+                        applications: options,
                         hasLoadMenu: true
                     }
                 )
+
+                this.initWarehouseSelect(res.data.warehouses);
             })
 
-            request({
-                method: "post",
-                url: "/search/search/searchSelectResult?perPage=1000&activePage=1",
-                data: {
-                    searchIdentity: "SearchWarehouseMainData",
-                    searchObject: {
-                        tables: "m_warehouse_main_data"
-                    },
-                    showColumns: [
-                        {
-                            dbField: "warehouse_code",
-                            name: "value",
-                            javaType: "java.lang.String"
-                        },
-                        {
-                            dbField: "warehouse_name",
-                            name: "label",
-                            javaType: "java.lang.String"
-                        }
-                    ]
-                }
-            }).then((res: any) => {
-                this.setState({
-                        warehouses: res.data.data.options,
-                    }
-                )
-                this.props.store.warehouse.setWarehouseCode(res.data.data.options[0].value)
-            })
         }
+    }
+
+    private initWarehouseSelect(warehouses: string) {
+        request({
+            method: "post",
+            url: "/search/search/searchSelectResult?perPage=1000&activePage=1",
+            data: {
+                searchIdentity: "SearchWarehouseMainData",
+                searchObject: {
+                    tables: "m_warehouse_main_data",
+                    where: "warehouse_code in (" + warehouses + ")"
+                },
+                showColumns: [
+                    {
+                        dbField: "warehouse_code",
+                        name: "value",
+                        javaType: "java.lang.String"
+                    },
+                    {
+                        dbField: "warehouse_name",
+                        name: "label",
+                        javaType: "java.lang.String"
+                    }
+                ]
+            }
+        }).then((res: any) => {
+            this.setState({
+                    warehouses: res.data.data.options,
+                }
+            )
+            this.props.store.warehouse.setWarehouseCode(res.data.data.options[0].value)
+        })
     }
 
     renderAside() {

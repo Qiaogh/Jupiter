@@ -1,21 +1,11 @@
 import schema2component from "../../../../utils/schema2component";
-import {address, contactor} from "@/pages/mdm/main_data/constants/form_constants";
 import {enable_options} from "@/utils/commonContants";
-import {warehouse_area_code, warehouse_area_id} from "@/pages/wms/constants/select_search_api_contant";
+import {warehouse_area_id} from "@/pages/wms/constants/select_search_api_contant";
 
 const form = {
     "type": "form",
     "api": {
-        url: "post:/wms/warehouseLogic/createOrUpdate",
-        requestAdaptor: function (api: { data: any; }) {
-            return {
-                ...api,
-                data: {
-                    ...api.data, // 获取暴露的 api 中的 data 变量
-                    "warehouseCode": "123" // 新添加数据
-                }
-            };
-        }
+        url: "/wms/warehouseLogic/createOrUpdate"
     },
     body: [
         {

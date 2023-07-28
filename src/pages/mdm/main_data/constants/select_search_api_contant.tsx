@@ -4,7 +4,7 @@ export const warehouse_search_api = {
     "data": {
         "searchIdentity": "SearchWarehouse",
         "searchObject": {
-            "tables": "m_warehouse"
+            "tables": "m_warehouse_main_data"
         },
         "showColumns": [
             {
@@ -20,7 +20,6 @@ export const warehouse_search_api = {
         ]
     }
 }
-
 
 export const owner_search_api = {
     "method": "post",

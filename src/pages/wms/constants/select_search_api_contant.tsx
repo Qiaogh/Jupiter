@@ -1,6 +1,8 @@
+export const warehouseFilter = "&warehouse_code=" + localStorage.getItem('warehouseCode');
+
 export const warehouse_area_group = {
     "method": "post",
-    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1",
+    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1" + warehouseFilter,
     "data": {
         "searchIdentity": "SearchWarehouseAreaGroup",
         "searchObject": {
@@ -23,7 +25,7 @@ export const warehouse_area_group = {
 
 export const warehouse_area_code = {
     "method": "post",
-    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1",
+    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1" + warehouseFilter,
     "data": {
         "searchIdentity": "SearchWarehouseArea",
         "searchObject": {
@@ -46,7 +48,7 @@ export const warehouse_area_code = {
 
 export const warehouse_area_id = {
     "method": "post",
-    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1",
+    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1" + warehouseFilter,
     "data": {
         "searchIdentity": "SearchWarehouseArea",
         "searchObject": {
@@ -67,9 +69,33 @@ export const warehouse_area_id = {
     }
 }
 
+export const warehouse_logic_id = {
+    "method": "post",
+    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1" + warehouseFilter,
+    "data": {
+        "searchIdentity": "SearchWarehouseLogic",
+        "searchObject": {
+            "tables": "w_warehouse_logic"
+        },
+        "showColumns": [
+            {
+                "dbField": "id",
+                "name": "value",
+                "javaType": "java.lang.String"
+            },
+            {
+                "dbField": "warehouse_logic_name",
+                "name": "label",
+                "javaType": "java.lang.String"
+            }
+        ]
+    }
+}
+
+
 export const container_spec = {
     "method": "post",
-    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1",
+    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1" + warehouseFilter,
     "data": {
         "searchIdentity": "SearchContainerSpec",
         "searchObject": {
@@ -92,7 +118,7 @@ export const container_spec = {
 
 export const work_station = {
     "method": "post",
-    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1",
+    "url": "/search/search/searchSelectResult?perPage=1000&activePage=1" + warehouseFilter,
     "data": {
         "searchIdentity": "SearchWorksStation",
         "searchObject": {

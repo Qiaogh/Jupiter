@@ -1,5 +1,4 @@
 import schema2component from "../../../../utils/schema2component";
-import {address, contactor} from "@/pages/mdm/main_data/constants/form_constants";
 
 const form = [
     {

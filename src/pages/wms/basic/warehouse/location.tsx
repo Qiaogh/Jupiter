@@ -1,20 +1,11 @@
 import schema2component from "../../../../utils/schema2component";
 import {enable_options} from "@/utils/commonContants";
-import {warehouse_area_id} from "@/pages/wms/constants/select_search_api_contant";
+import {warehouse_area_id, warehouse_logic_id, warehouseFilter} from "@/pages/wms/constants/select_search_api_contant";
 
 const form = {
     "type": "form",
     "api": {
-        url: "post:/wms/warehouseLogic/createOrUpdate",
-        requestAdaptor: function (api: { data: any; }) {
-            return {
-                ...api,
-                data: {
-                    ...api.data, // 获取暴露的 api 中的 data 变量
-                    "warehouseCode": "123" // 新添加数据
-                }
-            };
-        }
+        url: "/wms/warehouseLogic/createOrUpdate"
     },
     body: [
         {
@@ -80,21 +71,19 @@ const actions = [
 ]
 const columns = [
     {
+        dbField: "l.id",
         name: "id",
         label: "ID",
         hidden: true
     },
     {
+        dbField: "l.version",
         name: "version",
         label: "Version",
         hidden: true
     },
     {
-        name: "warehouseCode",
-        label: "仓库编码",
-    },
-    {
-        name: "warehouseAreaId",
+        name: "warehouseAreaCode",
         label: "库区ID",
     },
     {
@@ -102,16 +91,32 @@ const columns = [
         label: "逻辑区编码",
     },
     {
-        name: "warehouseLogicName",
-        label: "逻辑区名称",
+        name: "aisleCode",
+        label: "巷道编码",
     },
     {
-        name: "remark",
-        label: "备注",
+        name: "shelfCode",
+        label: "货架编码",
     },
     {
-        name: "enable",
-        label: "状态",
+        name: "locationCode",
+        label: "库位编码",
+    },
+    {
+        name: "locationType",
+        label: "库位类型",
+    },
+    {
+        name: "heat",
+        label: "库位热度",
+    },
+    {
+        name: "occupied",
+        label: "占用",
+    },
+    {
+        name: "locationStatus",
+        label: "库位状态",
     },
     {
         name: "createTime",
@@ -123,7 +128,7 @@ const columns = [
     }
 ]
 
-const searchIdentity = "WWarehouseLogic";
+const searchIdentity = "WLocation";
 const showColumns = columns;
 
 const filter = {
@@ -133,27 +138,45 @@ const filter = {
             "type": "group",
             "body": [
                 {
-                    "label": "库区编码",
-                    "type": "input-text",
-                    "name": "warehouseAreaCode",
+                    "label": "库区",
+                    "type": "select",
+                    "name": "warehouseAreaId",
+                    "source": warehouse_area_id,
                     "clearable": true,
                     "size": "sm",
                     "op": "eq"
                 },
                 {
-                    "label": "逻辑区编码",
+                    "label": "逻辑区",
+                    "type": "select",
+                    "source": warehouse_logic_id,
+                    "name": "warehouseLogicId",
+                    "clearable": true,
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "label": "巷道",
                     "type": "input-text",
-                    "name": "warehouseLogicCode",
+                    "name": "aisleCode",
+                    "clearable": true,
+                    "size": "sm",
+                    "op": "eq"
+                },
+                {
+                    "label": "库位",
+                    "type": "input-text",
+                    "name": "locationCode",
                     "clearable": true,
                     "size": "sm",
                     "op": "eq"
                 },
                 {
                     "label": "状态",
-                    "type": "input-text",
+                    "type": "select",
                     "name": "enable",
                     "clearable": true,
-                    "options": enable_options,
+                    "source": "${LocationStatus}",
                     "size": "sm",
                     "op": "eq"
                 },
@@ -184,7 +207,7 @@ const searchFilter =
 
 const schema = {
     type: 'page',
-    title: '仓库管理',
+    title: '库位管理',
     toolbar: [],
     initApi: "/mdm/dictionary/getAll",
     body: [
@@ -193,12 +216,15 @@ const schema = {
             name: "role",
             api: {
                 method: "POST",
-                url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter,
+                url: "/search/search?page=${page}&perPage=${perPage}&" + searchFilter + warehouseFilter,
                 dataType: "application/json"
             },
             defaultParams: {
                 "searchIdentity": searchIdentity,
-                "showColumns": showColumns
+                "showColumns": showColumns,
+                "searchObject": {
+                    "tables":"w_location l , w_warehouse_logic c where l.warehouse_logic_id = c.id"
+                }
             },
             filter: filter,
             footerToolbar: ["switch-per-page", "statistics", "pagination"],

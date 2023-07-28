@@ -6,6 +6,7 @@ import {
     api_role_update_role_menu
 } from "@/pages/user/constants/api_constant";
 import {create_update_columns} from "@/utils/commonContants";
+import {warehouse_search_api} from "@/pages/mdm/main_data/constants/select_search_api_contant";
 
 const form = [
     {
@@ -21,6 +22,14 @@ const form = [
         "label": "角色名称",
         "type": "input-text",
         "name": "name"
+    },
+    {
+        "label": "仓库权限",
+        "type": "select",
+        multiple: true,
+        search: true,
+        "name": "warehouseCodes",
+        "source": warehouse_search_api
     },
     {
         "label": "描述",
@@ -189,7 +198,7 @@ const schema = {
                                 "title": "修改",
                                 "body": {
                                     "type": "form",
-                                    // "initApi": "get:/user/api/user/${id}",
+                                    "initApi": "get:/user/api/role/${id}",
                                     "api": api_role_update,
                                     "body": form
                                 }

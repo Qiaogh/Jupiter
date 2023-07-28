@@ -5,16 +5,7 @@ import {warehouse_area_group} from "@/pages/wms/constants/select_search_api_cont
 const form = {
     "type": "form",
     "api": {
-        url: "post:/wms/warehouseArea/createOrUpdate",
-        requestAdaptor: function (api: { data: any; }) {
-            return {
-                ...api,
-                data: {
-                    ...api.data, // 获取暴露的 api 中的 data 变量
-                    "warehouseCode": "123" // 新添加数据
-                }
-            };
-        }
+        url: "/wms/warehouseArea/createOrUpdate"
     },
     body: [
         {
