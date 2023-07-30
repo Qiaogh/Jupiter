@@ -20,7 +20,7 @@ eg: 增加一个user应用，则创建一个user的目录
 
 
 ### 注意事项
-在执行npm start启动的时候,可能会出现
+1. 在执行npm start启动的时候,可能会出现
 ```azure
 Module not found: Error: Can't resolve 'react-overlays/useRootClose' in xxx
 ```
@@ -28,4 +28,9 @@ Module not found: Error: Can't resolve 'react-overlays/useRootClose' in xxx
 ```azure
 npm install react-overlays
 ```
+2. 因为本地packing的host默认为test.baidu.com，需要将本机的host文件增加一列
+```agsl
+xxx.xxx.xxx.xxx test.baidu.com
+```
+xxx.xxx.xxx.xxx为本机ip
 
