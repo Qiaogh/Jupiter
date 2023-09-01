@@ -96,7 +96,6 @@ export default class Admin extends React.Component<AdminProps, any> {
                         />
                     </div>
 
-
                     <div className="m-l-auto hidden-xs pull-right">
                         <span>{store.user.name}</span><span className={'btn btn-link'} onClick={this.logout}>[退出]</span>
                     </div>
