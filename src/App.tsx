@@ -42,7 +42,7 @@ export default function (): JSX.Element {
             if (method === 'get' && data) {
                 config.params = data;
             } else if (data && typeof data !== 'string'
-                && !(data instanceof Blob) && !(data instanceof ArrayBuffer)) {
+                && !(data instanceof Blob) && !(data instanceof ArrayBuffer) && !(data instanceof FormData)) {
                 data = JSON.stringify(data);
                 config.headers['Content-Type'] = 'application/json';
             }

@@ -18,14 +18,14 @@ import WarehouseManage from '../pages/wms/basic/warehouse/warehouse_management'
 import WarehouseAreaGroupManage from '../pages/wms/basic/warehouse/warehouse_area_group'
 import WarehouseAreaManage from '../pages/wms/basic/warehouse/warehouse_area'
 import WarehouseLogicManage from '../pages/wms/basic/warehouse/warehouse_logic'
-
 import ContainerSpecManage from '../pages/wms/basic/container/container_spec'
 import ContainerManage from '../pages/wms/basic/container/container'
-
 import WorkStationManage from '../pages/wms/basic/station/work_station'
 import PutWallManage from '../pages/wms/basic/station/put_wall'
-
 import ContainerStock from '../pages/wms/stock/container_stock'
+
+import PluginManagement from '../pages/plugin/plugin_management/plugin_management'
+import PluginStore from '../pages/plugin/plugin_management/plugin_store'
 
 const path2components = [
     {
@@ -128,6 +128,15 @@ const path2components = [
         component: ContainerStock
     },
 
+    //Plugin System
+    {
+        path: '/plugin/plugin-management/plugin-management',
+        component: PluginManagement
+    },
+    {
+        path: '/plugin/plugin-management/plugin-store',
+        component: PluginStore
+    },
 
 ]
 

@@ -16,12 +16,16 @@ export default function request(config: AxiosRequestConfig) {
     const domain = new URL(currentUrl).hostname;
     // Split the domain by dots and get the first part (before the first dot)
     config.headers["X-TenantID"] = domain.split('.')[0]
-    config.headers["X-WarehouseID"] = <string>localStorage.getItem("warehouseCode")
+
+    let warehouseCode = <string>localStorage.getItem("warehouseCode");
+    if (warehouseCode === null) {
+        warehouseCode = "";
+    }
+    config.headers["X-WarehouseID"] = warehouseCode
 
     if (config.url.startsWith("/gw/wms")
         && (config.method == 'post' || config.method == 'POST')
         && config.data != undefined && !Array.isArray(config.data)) {
-        debugger
         if (config.headers["Content-Type"] == "application/json") {
             let data = {...JSON.parse(config.data)};
             data["warehouseCode"] = localStorage.getItem("warehouseCode");
