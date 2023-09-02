@@ -21,7 +21,7 @@ const User = types
                 console.log("logout finished!")
             },
             afterCreate() {
-                self.name = localStorage.getItem('Authorization') || '';
+                // self.name = localStorage.getItem('Authorization') || '';
             }
         }
     });
