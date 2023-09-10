@@ -58,7 +58,7 @@ export default class Admin extends React.Component<AdminProps, any> {
                         <i className="fa fa-bars text-white"/>
                     </button>
                     <div className={`cxd-Layout-brand`}>
-                        <i className="fa fa-paw"/>
+                        {/*<i className="fa fa-paw"/>*/}
                         <span className="hidden-folded m-l-sm">SWMS</span>
                     </div>
                 </div>
